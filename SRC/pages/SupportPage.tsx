@@ -12,14 +12,16 @@ export default function SupportPage() {
       try {
         await navigator.share(shareData);
       } catch (err) {
-        if ((err as Error).name !== 'AbortError') {
-          navigator.clipboard.writeText(window.location.origin);
-          alert('Link copied!');
-        }
+        // User cancelled the share - do nothing
       }
     } else {
-      navigator.clipboard.writeText(window.location.origin);
-      alert('Link copied!');
+      // Fallback for browsers that don't support Web Share API
+      try {
+        await navigator.clipboard.writeText(window.location.origin);
+        alert('Link copied to clipboard!');
+      } catch (err) {
+        alert('Unable to share. Please copy this link manually: ' + window.location.origin);
+      }
     }
   };
 

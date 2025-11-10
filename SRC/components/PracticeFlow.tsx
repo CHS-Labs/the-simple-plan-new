@@ -88,15 +88,20 @@ export default function PracticeFlow({ pair, onClose }: PracticeFlowProps) {
     if (navigator.share) {
       try {
         await navigator.share(shareData);
+        setShareSuccess(true);
+        setTimeout(() => setShareSuccess(false), 3000);
       } catch (err) {
-        if ((err as Error).name !== 'AbortError') {
-          navigator.clipboard.writeText(window.location.origin);
-          alert('Link copied to clipboard!');
-        }
+        // User cancelled the share - do nothing
       }
     } else {
-      navigator.clipboard.writeText(window.location.origin);
-      alert('Link copied! Share it with someone who needs it.');
+      // Fallback for browsers that don't support Web Share API
+      try {
+        await navigator.clipboard.writeText(window.location.origin);
+        setShareSuccess(true);
+        setTimeout(() => setShareSuccess(false), 3000);
+      } catch (err) {
+        alert('Unable to share. Please copy this link manually: ' + window.location.origin);
+      }
     }
   };
 
@@ -186,7 +191,7 @@ export default function PracticeFlow({ pair, onClose }: PracticeFlowProps) {
                 className="w-full border-2 border-primary-gold text-primary-gold py-3 rounded-lg font-medium hover:bg-background-warm transition flex items-center justify-center gap-2 focus:outline-none focus:ring-4 focus:ring-focus-ring"
               >
                 <Share2 size={20} />
-                {shareSuccess ? 'Link copied!' : 'Share this with someone who needs it'}
+                {shareSuccess ? 'Shared!' : 'Share this with someone who needs it'}
               </button>
             </div>
           )}
