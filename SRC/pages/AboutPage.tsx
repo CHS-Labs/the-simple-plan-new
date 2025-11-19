@@ -21,7 +21,9 @@ export default function AboutPage() {
             <video
               className="w-full rounded-lg"
               controls
-              preload="metadata"
+              autoPlay
+              muted
+              playsInline
             >
               <source src="/Glen - test.mp4" type="video/mp4" />
               Your browser does not support the video tag.
