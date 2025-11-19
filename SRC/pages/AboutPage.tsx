@@ -1,4 +1,4 @@
-import { Info, PlayCircle } from 'lucide-react';
+import { Info } from 'lucide-react';
 
 export default function AboutPage() {
   return (
@@ -18,12 +18,14 @@ export default function AboutPage() {
 
         <div className="space-y-6">
           <div className="bg-white rounded-lg shadow-lg p-6">
-            <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg mb-6 flex items-center justify-center">
-              <div className="text-center">
-                <PlayCircle className="text-gray-400 w-16 h-16 mx-auto mb-2" />
-                <p className="text-text-secondary text-sm">Video coming soon</p>
-              </div>
-            </div>
+            <video
+              className="w-full rounded-lg"
+              controls
+              preload="metadata"
+            >
+              <source src="/Glen - test.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
 
           <div className="bg-white rounded-lg shadow-lg p-6">
